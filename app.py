@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return 'index'
+    return 'japan'
 
 @app.route('/login')
 def login():
