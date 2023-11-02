@@ -1,0 +1,24 @@
+{
+	"name": "Python",
+
+	"build": {
+		"dockerfile": "./Dockerfile"
+	},
+	"runArgs": [
+		"-it", "--rm",
+		"--name", "python-container"
+	],
+
+	"workspaceFolder": "/app",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/app,type=bind,consistency=delegated",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"GitHub.copilot",
+				"mhutchie.git-graph",
+				"ms-python.python",
+				"humao.rest-client"
+			]
+		}
+	}
+}
