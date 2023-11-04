@@ -7,9 +7,9 @@ def make_number(selected_number: set[int], unselected_number: set[int]) -> int:
     unselected_numberはまだ発表されていない数字
     まだ発表されていない数字のうちランダムに数字1つが発表される
     """
-    x = choice(unselected_number)
-    unselected_number.remove(x)
-    selected_number.add(x)
+    x = choice(list(selected_number))
+    unselected_number.add(x)
+    selected_number.remove(x)
     return x
 
 def make_bingo() -> tuple[tuple[tuple[int]], tuple[tuple[int]]]:
@@ -36,9 +36,8 @@ def make_red(new_number: int) -> None:
     # <span>を加えて赤色にする
     pass
 
-ind_to_num, num_to_ind = make_bingo()
-
-selected_number = set(i for i in range(1, 101))
-unselected_number = set()
-new_number = make_number(selected_number, unselected_number)
-make_red(new_number)
+if __name__=="__main__":
+    ind_to_num, num_to_ind = make_bingo()
+    selected_number = set(i for i in range(1, 101))
+    unselected_number = set()
+    new_number = make_number(selected_number, unselected_number)

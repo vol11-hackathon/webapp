@@ -1,8 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>{{name}}</h1>
-    <p class="important">
-      here is contents.
-    </p>
+  <h1>{{name}}</h1>
+  
+  <div class="container text-center">
+  {% for i in context.your_card %}
+    <div class="row">
+      {% for j in i %}
+        <div class="col">
+          {{j}}
+        </div>
+      {% endfor %}
+    </div>
+  {% endfor %}
+  </div>
+
+  <center>
+  <a href="{{ url_for('reset') }}">
+    <button type="button" class="btn btn-outline-primary">Primary</button>
+  </a>
+  </center>
+
 {% endblock %}
