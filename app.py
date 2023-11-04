@@ -8,7 +8,7 @@ app = Flask(__name__, template_folder='templates')
 app._static_folder = 'static'
 
 app.secret_key = 'abcdefg'
-app.permanent_session_lifetime = timedelta(minutes=5) 
+app.permanent_session_lifetime = timedelta(minutes=5)
 
 @app.route('/')
 def index():
@@ -50,8 +50,18 @@ def draw():
         ((0, 0), (1, 1), (2, 2), (3, 3), (4, 4)),
         ((0, 4), (1, 3), (2, 2), (3, 1), (4, 0))
     )
-    count(new_number, session["num_index"], session["check"], cnt_to_ind)
+    row, line = count(new_number, session["num_index"], session["check"], cnt_to_ind)
+    if row != -1 and line != -1:
+        id = F"cell_{5 * row + line}"
+        session["open_cell"].append(id)
+    new_entry = F"{new_number} " if opened % 10 != 0 else F"{new_number} <br>"
+    session["drawed_num"] += new_entry
     return redirect(url_for('index'))
+
+# debug
+@app.route('/page')
+def page():
+    return render_template('a.html')
 
 def set_context(ses):
     context = {
@@ -60,7 +70,9 @@ def set_context(ses):
         "opened": ses["opened"],
         "number_order": ses["number_order"],
         "check": ses["check"],
-        "result": session.get('result', None)
+        "result": ses.get('result', None),
+        "open_cell": ses["open_cell"],
+        "drawed_num": ses["drawed_num"]
     }
     return context
 
@@ -70,6 +82,8 @@ def init_session(ses, your_num, num_index):
     ses["opened"] = 0
     ses["number_order"] = sample([i for i in range(1, 101)], 100)
     ses["check"] = [0 for _ in range(12)]
+    ses["open_cell"] = []
+    ses["drawed_num"] = ""
 
 if __name__=="__main__":
     app.run(debug=True, host='0.0.0.0', port=5000)

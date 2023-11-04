@@ -35,7 +35,7 @@ def count(new_number: int, num_to_ind: tuple[tuple[int]], cnt: list[int], cnt_to
     """
     i, j = num_to_ind[new_number]
     if i == -1:
-        return
+        return i, j
     cnt[i] += 1
     cnt[j + 5] += 1
     if i == j:
@@ -45,14 +45,15 @@ def count(new_number: int, num_to_ind: tuple[tuple[int]], cnt: list[int], cnt_to
     print(cnt)
     for k in range(12):
         if cnt[k] == 4:
-            for i, j in cnt_to_ind[k]:
+            for ii, jj in cnt_to_ind[k]:
                 # リーチである目印(色変えるなど)
                 pass
     for k in range(12):
         if cnt[k] == 5:
-            for i, j in cnt_to_ind[k]:
+            for ii, jj in cnt_to_ind[k]:
                 # ビンゴである目印(色変えるなど)
                 pass
+    return i, j
 
 def make_red(new_number: int) -> None:
     # <span>を加えて赤色にする

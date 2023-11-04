@@ -23,6 +23,7 @@
   <a href="{{ url_for('draw') }}">
     <button type="button" class="btn btn-outline-primary">ルーレットを引く</button>
   </a>
+
 </center>
 {% endblock %}
 
@@ -32,6 +33,10 @@
 
 <center>
   <h1>{{context.result.new_number}}</h1>
+  <div class="container-fluid">
+    <p>引いた数字</p>
+    <p>{{context.drawed_num | safe}}</p>
+  </div>
 </center>
 
 {% endif %}
