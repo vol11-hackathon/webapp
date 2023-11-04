@@ -31,13 +31,16 @@ def draw():
     number_order = session["number_order"]
     opened = session["opened"]
     new_number, opened = make_number(number_order, opened)
-    session["opened"] = opened
     print(F"new_number:{new_number}")
+    session["opened"] = opened
+    result_prev = session.get('result', None)
+    bingo_cells = result_prev["bingo"] if result_prev is not None else []
+    reach_cells = result_prev["reach"] if result_prev is not None else []
     row, line = session["num_index"][new_number]
     if row != -1 and line != -1:
         id = 5 * row + line
         session["open_cell"].append(id)
-    bingo_cells, reach_cells = check_bingo(row, line, session["check"])
+        bingo_cells, reach_cells = check_bingo(row, line, session["check"])
     session["result"] = {
         "new_number": new_number,
         "bingo": bingo_cells,

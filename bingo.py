@@ -39,7 +39,7 @@ def check_bingo(row: int, line: int, cnt: list[int]) -> tuple[list[int], list[in
         cnt[10] += 1
     if row + line == 4:
         cnt[11] += 1
-    print(cnt)
+    print(F"count_map:{cnt}")
     cnt_to_ind = [
         (0,  1,  2,  3,  4),
         (5,  6,  7,  8,  9),
@@ -63,7 +63,11 @@ def check_bingo(row: int, line: int, cnt: list[int]) -> tuple[list[int], list[in
         if cnt[k] == 5:
             for cell in cnt_to_ind[k]: # ビンゴである目印(色変えるなど)
                 bingo_cells.add(cell)
-    return list(bingo_cells), list(reach_cells)
+    bingo_cells = list(bingo_cells)
+    reach_cells = list(reach_cells)
+    print(F"bingo_cells:{bingo_cells}")
+    print(F"reach_cells:{reach_cells}")
+    return bingo_cells, reach_cells
 
 if __name__=="__main__":
     ind_to_num, num_to_ind = make_bingo()
