@@ -1,6 +1,6 @@
 from random import randint, sample
 
-def make_number(number_order: list[int], opened: int) -> tuple[int, int]:
+def make_number(number_order: list[int], opened: int) -> tuple[int, int]: 
     """
     がちゃがちゃ
     まだ発表されていない数字が1つ発表される
@@ -8,7 +8,7 @@ def make_number(number_order: list[int], opened: int) -> tuple[int, int]:
     x = number_order[opened]
     return x, opened + 1
 
-def make_bingo() -> tuple[tuple[tuple[int]], tuple[tuple[int]]]:
+def make_bingo() -> tuple[tuple[tuple[int]], tuple[tuple[int]]]: 
     """
     ind_to_num: bingoのインデックスに対応する番号
     num_to_ind: bingoの番号に対応するインデックス
@@ -58,28 +58,28 @@ def make_red(new_number: int) -> None:
     # <span>を加えて赤色にする
     pass
 
-ind_to_num, num_to_ind = make_bingo()
+if __name__=="__main__":
+    ind_to_num, num_to_ind = make_bingo()
 
-number_order = sample([i for i in range(1, 101)], 100)
-opened = 0
+    number_order = sample([i for i in range(1, 101)], 100)
+    opened = 0
 
-cnt = [0 for _ in range(12)]
-cnt_to_ind = (((0, 0), (0, 1), (0, 2), (0, 3), (0, 4)),
-              ((1, 0), (1, 1), (1, 2), (1, 3), (1, 4)),
-              ((2, 0), (2, 1), (2, 2), (2, 3), (2, 4)),
-              ((3, 0), (3, 1), (3, 2), (3, 3), (3, 4)),
-              ((4, 0), (4, 1), (4, 2), (4, 3), (4, 4)),
-              ((0, 0), (1, 0), (2, 0), (3, 0), (4, 0)),
-              ((0, 1), (1, 1), (2, 1), (3, 1), (4, 1)),
-              ((0, 2), (1, 2), (2, 2), (3, 2), (4, 2)),
-              ((0, 3), (1, 3), (2, 3), (3, 3), (4, 3)),
-              ((0, 4), (1, 4), (2, 4), (3, 4), (4, 4)),
-              ((0, 0), (1, 1), (2, 2), (3, 3), (4, 4)),
-              ((0, 4), (1, 3), (2, 2), (3, 1), (4, 0)))
-
-print(ind_to_num)
-for i in range(50):
-    new_number, opened = make_number(number_order, opened)
-    print(new_number)
-    count(new_number, num_to_ind, cnt, cnt_to_ind)
-    make_red(new_number)
+    cnt = [0 for _ in range(12)]
+    cnt_to_ind = (((0, 0), (0, 1), (0, 2), (0, 3), (0, 4)),
+                ((1, 0), (1, 1), (1, 2), (1, 3), (1, 4)),
+                ((2, 0), (2, 1), (2, 2), (2, 3), (2, 4)),
+                ((3, 0), (3, 1), (3, 2), (3, 3), (3, 4)),
+                ((4, 0), (4, 1), (4, 2), (4, 3), (4, 4)),
+                ((0, 0), (1, 0), (2, 0), (3, 0), (4, 0)),
+                ((0, 1), (1, 1), (2, 1), (3, 1), (4, 1)),
+                ((0, 2), (1, 2), (2, 2), (3, 2), (4, 2)),
+                ((0, 3), (1, 3), (2, 3), (3, 3), (4, 3)),
+                ((0, 4), (1, 4), (2, 4), (3, 4), (4, 4)),
+                ((0, 0), (1, 1), (2, 2), (3, 3), (4, 4)),
+                ((0, 4), (1, 3), (2, 2), (3, 1), (4, 0)))
+    print(ind_to_num)
+    for i in range(50):
+        new_number, opened = make_number(number_order, opened)
+        print(new_number)
+        count(new_number, num_to_ind, cnt, cnt_to_ind)
+        make_red(new_number)

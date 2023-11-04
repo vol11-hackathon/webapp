@@ -2,27 +2,37 @@
 
 {% block content %}
 <center>
-  <h1>{{name}}</h1>
+  <h1>BINGO</h1>
   <a href="{{ url_for('reset') }}">
     <button type="button" class="btn btn-outline-secondary">reset</button>
   </a>
   <table style="width: 300px; height: 300px;">
     <tbody>
-      {% set index = 0 %}
-      {% for i in context.your_card %}
+      {% set ns = namespace(index = 0) %}
+      {% for i in context.your_num %}
       <tr align="center">
         {% for j in i %}
-        <td id="cell{{ index }}">{{j}}</td>
-        {% set index = index + 1 %}
+        <td id="cell_{{ ns.index }}">{{j}}</td>
+        {% set ns.index = ns.index + 1 %}
         {% endfor %}
       </tr>
       {% endfor %}
     </tbody>
   </table>
-  <a href="">
+
+  <a href="{{ url_for('draw') }}">
     <button type="button" class="btn btn-outline-primary">ルーレットを引く</button>
   </a>
-  
+</center>
+{% endblock %}
+
+
+{% block result %}
+{% if context.result %}
+
+<center>
+  <h1>{{context.result.new_number}}</h1>
 </center>
 
+{% endif %}
 {% endblock %}

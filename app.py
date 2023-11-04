@@ -1,6 +1,8 @@
 from flask import Flask, render_template, redirect, url_for, session 
-from bingo import make_bingo, make_number
+from bingo import make_bingo, make_number, count
 from datetime import timedelta 
+
+from random import sample
 
 app = Flask(__name__, template_folder='templates')
 app._static_folder = 'static'
@@ -8,32 +10,66 @@ app._static_folder = 'static'
 app.secret_key = 'abcdefg'
 app.permanent_session_lifetime = timedelta(minutes=5) 
 
-selected_number = set(i for i in range(1, 101))
-unselected_number = set()
-
 @app.route('/')
 def index():
-    if "selected_number" in session or "unselected_number" in session:
-        context = {
-            "your_card": session["selected_number"],
-        }
-        return render_template('body.html', name='BINGO', context=context)
+    if "your_num" in session or "num_index" in session:
+        context = set_context(session)
     else:
-        ind_to_num, num_to_ind = make_bingo()
+        your_num, num_index = make_bingo()
         session.permanent = True
-        session["selected_number"] = ind_to_num
-        session["unselected_number"] = num_to_ind
-        context = {
-            "your_card": ind_to_num,
-        }
-    return render_template('body.html', name='BINGO', context=context)
+        init_session(session, your_num, num_index)
+        context = set_context(session)
+    return render_template('body.html', context=context)
 
 @app.route('/reset')
 def reset():
-    session.pop('selected_number', None)
-    session.pop('unselected_number', None)
     session.clear()
     return redirect(url_for('index'))
+
+@app.route('/draw')
+def draw():
+    number_order = session["number_order"]
+    opened = session["opened"]
+    new_number, opened = make_number(number_order, opened)
+    session["opened"] = opened
+    session["result"] = {
+        "new_number": new_number,
+    }
+    print(new_number)
+    cnt_to_ind = (
+        ((0, 0), (0, 1), (0, 2), (0, 3), (0, 4)),
+        ((1, 0), (1, 1), (1, 2), (1, 3), (1, 4)),
+        ((2, 0), (2, 1), (2, 2), (2, 3), (2, 4)),
+        ((3, 0), (3, 1), (3, 2), (3, 3), (3, 4)),
+        ((4, 0), (4, 1), (4, 2), (4, 3), (4, 4)),
+        ((0, 0), (1, 0), (2, 0), (3, 0), (4, 0)),
+        ((0, 1), (1, 1), (2, 1), (3, 1), (4, 1)),
+        ((0, 2), (1, 2), (2, 2), (3, 2), (4, 2)),
+        ((0, 3), (1, 3), (2, 3), (3, 3), (4, 3)),
+        ((0, 4), (1, 4), (2, 4), (3, 4), (4, 4)),
+        ((0, 0), (1, 1), (2, 2), (3, 3), (4, 4)),
+        ((0, 4), (1, 3), (2, 2), (3, 1), (4, 0))
+    )
+    count(new_number, session["num_index"], session["check"], cnt_to_ind)
+    return redirect(url_for('index'))
+
+def set_context(ses):
+    context = {
+        "your_num": ses["your_num"],
+        "num_index": ses["num_index"],
+        "opened": ses["opened"],
+        "number_order": ses["number_order"],
+        "check": ses["check"],
+        "result": session.get('result', None)
+    }
+    return context
+
+def init_session(ses, your_num, num_index):
+    ses["your_num"] = your_num
+    ses["num_index"] = num_index
+    ses["opened"] = 0
+    ses["number_order"] = sample([i for i in range(1, 101)], 100)
+    ses["check"] = [0 for _ in range(12)]
 
 if __name__=="__main__":
     app.run(debug=True, host='0.0.0.0', port=5000)
