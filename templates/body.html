@@ -1,8 +1,28 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>{{name}}</h1>
-    <p class="important">
-      here is contents.
-    </p>
+<center>
+  <h1>{{name}}</h1>
+  <a href="{{ url_for('reset') }}">
+    <button type="button" class="btn btn-outline-secondary">reset</button>
+  </a>
+  <table style="width: 300px; height: 300px;">
+    <tbody>
+      {% set index = 0 %}
+      {% for i in context.your_card %}
+      <tr align="center">
+        {% for j in i %}
+        <td id="cell{{ index }}">{{j}}</td>
+        {% set index = index + 1 %}
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <a href="">
+    <button type="button" class="btn btn-outline-primary">ルーレットを引く</button>
+  </a>
+  
+</center>
+
 {% endblock %}
