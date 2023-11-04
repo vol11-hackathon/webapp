@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, url_for
 from bingo import make_bingo, make_number
 
 app = Flask(__name__, template_folder='templates')
+app._static_folder = 'static'
 
 selected_number = set(i for i in range(1, 101))
 unselected_number = set()
@@ -14,7 +15,7 @@ def index():
     context = {
         "your_card": ind_to_num,
     }
-    return render_template('body.html', name='ビンゴ', context=context)
+    return render_template('body.html', name='BINGO', context=context)
 
 @app.route('/reset')
 def reset():
