@@ -61,20 +61,27 @@
       </tbody>
     </table>
 
-  <p> <a href="">ルーレットを引く</a> </p>
-
+  <button id="ButtonPushed">ルーレットを回す</button>
+  <p id="outputNumber"></p>
   </center>
   
   <script type="text/javascript">
     // 乱数を生成し、表のセルにセットする関数
     function setRandomNumber() {
-      var cells = document.querySelectorAll("td[id^='cell']"); // id属性がcellで始まるすべてのtd要素を取得
+      var cells = document.querySelectorAll("td[id^='cell']");
 
       for (var i = 0; i < cells.length; i++) {
-        var randomNumber = Math.floor(Math.random() * 200) + 1; // 1から200までのランダムな数を生成
-        cells[i].textContent = randomNumber; // セルにランダムな数を表示
+        var randomNumber = Math.floor(Math.random() * 200) + 1;
+        cells[i].textContent = randomNumber;
       }
     }
+    const button=document.getElementById('ButtonPushed');
+    const output=document.getElementById('outputNumber');
+
+    button.addEventListener('click',function(){
+	var randomNum=Math.floor(Math.random()*200)+1;
+	output.textContent='発表された番号：'+randomNum;
+    });
 
     setRandomNumber(); // ページ読み込み時に初期のランダムな数をセット
 
