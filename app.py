@@ -1,14 +1,10 @@
-from flask import Flask, url_for
+from flask import Flask, render_template
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates')
 
 @app.route('/')
 def index():
-    return 'japan'
-
-@app.route('/login')
-def login():
-    return 'login'
+    return render_template('body.html', name='sample')
 
 @app.route('/user/<username>')
 def profile(username):
