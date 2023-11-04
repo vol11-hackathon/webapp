@@ -54,7 +54,7 @@ def draw():
     if row != -1 and line != -1:
         id = F"cell_{5 * row + line}"
         session["open_cell"].append(id)
-    new_entry = F"{new_number} " if opened % 10 != 0 else F"{new_number} <br>"
+    new_entry = F"{new_number:>2} " if opened % 10 != 0 else F"{new_number:>2} <br>"
     session["drawed_num"] += new_entry
     return redirect(url_for('index'))
 

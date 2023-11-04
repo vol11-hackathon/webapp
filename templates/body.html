@@ -1,5 +1,25 @@
 {% extends "base.html" %}
 
+{% block style %}
+{% if context.open_cell %}
+
+{% for cell in context.open_cell %}
+<style>
+  #{{ cell }} {
+    background-color: #80ff9a;
+    border: 2px solid green;
+  }
+</style>
+{% endfor %}
+
+
+
+{% endif %}
+{% endblock %}
+
+
+<!------------>
+
 {% block content %}
 <center>
   <h1>BINGO</h1>
@@ -20,13 +40,14 @@
     </tbody>
   </table>
 
-  <a href="{{ url_for('draw') }}">
-    <button type="button" class="btn btn-outline-primary">ルーレットを引く</button>
-  </a>
+  <button type="button" class="btn btn-primary btn-lg" onclick="location.href='{{ url_for('draw') }}'" >
+    ルーレットを引く
+  </button>
 
 </center>
 {% endblock %}
 
+<!------------>
 
 {% block result %}
 {% if context.result %}
