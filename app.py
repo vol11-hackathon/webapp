@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, url_for, session 
-from bingo import make_bingo, make_number, count
+from bingo import make_bingo, make_number, check_bingo
 from datetime import timedelta 
 
 from random import sample
@@ -32,28 +32,17 @@ def draw():
     opened = session["opened"]
     new_number, opened = make_number(number_order, opened)
     session["opened"] = opened
+    print(F"new_number:{new_number}")
+    row, line = session["num_index"][new_number]
+    if row != -1 and line != -1:
+        id = 5 * row + line
+        session["open_cell"].append(id)
+    bingo_cells, reach_cells = check_bingo(row, line, session["check"])
     session["result"] = {
         "new_number": new_number,
+        "bingo": bingo_cells,
+        "reach": reach_cells,
     }
-    print(new_number)
-    cnt_to_ind = (
-        ((0, 0), (0, 1), (0, 2), (0, 3), (0, 4)),
-        ((1, 0), (1, 1), (1, 2), (1, 3), (1, 4)),
-        ((2, 0), (2, 1), (2, 2), (2, 3), (2, 4)),
-        ((3, 0), (3, 1), (3, 2), (3, 3), (3, 4)),
-        ((4, 0), (4, 1), (4, 2), (4, 3), (4, 4)),
-        ((0, 0), (1, 0), (2, 0), (3, 0), (4, 0)),
-        ((0, 1), (1, 1), (2, 1), (3, 1), (4, 1)),
-        ((0, 2), (1, 2), (2, 2), (3, 2), (4, 2)),
-        ((0, 3), (1, 3), (2, 3), (3, 3), (4, 3)),
-        ((0, 4), (1, 4), (2, 4), (3, 4), (4, 4)),
-        ((0, 0), (1, 1), (2, 2), (3, 3), (4, 4)),
-        ((0, 4), (1, 3), (2, 2), (3, 1), (4, 0))
-    )
-    row, line = count(new_number, session["num_index"], session["check"], cnt_to_ind)
-    if row != -1 and line != -1:
-        id = F"cell_{5 * row + line}"
-        session["open_cell"].append(id)
     new_entry = F"{new_number:>2} " if opened % 10 != 0 else F"{new_number:>2} <br>"
     session["drawed_num"] += new_entry
     return redirect(url_for('index'))

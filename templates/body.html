@@ -1,23 +1,42 @@
 {% extends "base.html" %}
 
 {% block style %}
-{% if context.open_cell %}
 
+<!-- Open cells -->
+{% if context.open_cell %}
 {% for cell in context.open_cell %}
 <style>
-  #{{ cell }} {
+  #cell_{{ cell }} {
     background-color: #80ff9a;
     border: 2px solid green;
   }
 </style>
 {% endfor %}
-
-
-
 {% endif %}
+<!-- Reach cells -->
+{% if context.result.reach %}
+{% for cell in context.result.reach %}
+<style>
+  #cell_{{ cell }} {
+    border: 2px solid yellow;
+  }
+</style>
+{% endfor %}
+{% endif %}
+<!-- Bingo cells -->
+{% if context.result.bingo %}
+{% for cell in context.result.bingo %}
+<style>
+  #cell_{{ cell }} {
+    background-color: #ff0000;
+    border: 3px solid red;
+  }
+</style>
+{% endfor %}
+{% endif %}
+
 {% endblock %}
-
-
+<!------------>
 <!------------>
 
 {% block content %}
@@ -47,6 +66,7 @@
 </center>
 {% endblock %}
 
+<!------------>
 <!------------>
 
 {% block result %}
