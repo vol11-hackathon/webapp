@@ -44,7 +44,7 @@
 
 {% block content %}
 <center>
-  <h1>BINGO</h1>
+  <h1 class="bingo-heading">BINGO</h1>
   <a href="{{ url_for('reset') }}">
     <button type="button" class="btn btn-secondary">reset</button>
   </a>
@@ -76,8 +76,8 @@
 {% if context.result %}
 
 <center>
+  <div class="container" style="background-color:white; width: 50%;">
   <h1>{{context.result.new_number}}</h1>
-  <div class="container-fluid" style="background-color:white;">
     <p>引いた数字</p>
     <p>{{context.drawed_num | safe}}</p>
   </div>

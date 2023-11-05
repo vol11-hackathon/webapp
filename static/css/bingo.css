@@ -6,9 +6,7 @@ table th, table td {
 border: solid 1px black;
 background-color: white;
 }
-h1{
-font-family:"Comic Sans MS";
-}
+
 table td {
 width:15%;
 height:15%;
@@ -17,3 +15,10 @@ height:15%;
 .btn{
 margin: 1em 0;
 }
+
+.bingo-heading {
+	text-align: center;
+	font-size: 50px;
+	text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
+  }
+
