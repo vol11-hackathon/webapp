@@ -1,7 +1,7 @@
 table {
 border-collapse: collapse;
 }
-
+body{background-size: cover;}
 table th, table td {
 border: solid 1px black;
 background-color: white;
