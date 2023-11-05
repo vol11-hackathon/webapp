@@ -4,6 +4,13 @@ border-collapse: collapse;
 
 table th, table td {
 border: solid 1px black;
-width: 50px;
-height: 50px;
+}
+
+table td {
+width:15%;
+height:15%;
+}
+
+.btn{
+margin: 1em 0;
 }
