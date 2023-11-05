@@ -6,7 +6,9 @@ table th, table td {
 border: solid 1px black;
 background-color: white;
 }
-
+h1{
+font-family:"Comic Sans MS";
+}
 table td {
 width:15%;
 height:15%;
